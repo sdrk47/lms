@@ -1,7 +1,7 @@
 package com.said.lms.controller;
 
 import com.said.lms.dto.LoginDto;
-import com.said.lms.dto.RefreshTokenRequestDto;
+import com.said.lms.token.dto.RefreshTokenRequestDto;
 import com.said.lms.dto.RegisterDto;
 import com.said.lms.model.User;
 import com.said.lms.repository.AuthenticationRepository;

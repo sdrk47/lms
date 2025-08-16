@@ -1,4 +1,4 @@
-package com.said.lms.dto;
+package com.said.lms.token.dto;
 
 import lombok.Getter;
 import lombok.Setter;

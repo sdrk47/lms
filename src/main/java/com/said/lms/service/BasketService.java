@@ -1,11 +1,14 @@
 package com.said.lms.service;
 
 import com.said.lms.model.Basket;
+import com.said.lms.model.Course;
 import com.said.lms.model.User;
 import com.said.lms.repository.BasketRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
@@ -13,6 +16,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class BasketService {
 
     private final BasketRepository basketRepository;
+    private final UserService userService;
+    private final CourseService courseService;
 
     public void create(User user) {
         Basket basket = Basket.builder()
@@ -20,5 +25,22 @@ public class BasketService {
                 .user(user)
                 .build();
         basketRepository.save(basket);
+    }
+
+    public Basket findAllOwnCourses(UserDetails userDetails) {
+        User user = userService.findByEmail(userDetails.getUsername());
+        return basketRepository.findByUserUserId(user.getUserId());
+    }
+
+    public Basket addCourseToBasket(Long courseId, UserDetails userDetails) {
+        User user = userService.findByEmail(userDetails.getUsername());
+        Basket basket = basketRepository.findByUserUserId(user.getUserId());
+        Course course = courseService.findById(courseId);
+
+        List<Course> courseList = basket.getCourses();
+        courseList.add(course);
+        basket.setCourses(courseList);
+        basketRepository.save(basket);
+        return basket;
     }
 }
