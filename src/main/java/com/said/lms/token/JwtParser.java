@@ -29,6 +29,5 @@ public class JwtParser {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-
     }
 }

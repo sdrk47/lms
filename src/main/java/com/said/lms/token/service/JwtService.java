@@ -1,11 +1,9 @@
 package com.said.lms.token.service;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -18,7 +16,6 @@ import java.util.Map;
 
 @Service
 @Getter
-@Slf4j
 public class JwtService implements JwtRepository {
     @Value("${jwt.secret}")
     private String secret;
