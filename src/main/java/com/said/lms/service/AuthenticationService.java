@@ -17,6 +17,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -76,10 +78,15 @@ public class AuthenticationService implements AuthenticationRepository {
             throw new IncorrectPasswordException("Authentication failed");
         }
 
+        Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
         String jwt = jwtRepository.generateToken(user);
         String refreshToken = jwtRepository.generateRefreshToken(new HashMap<>(), user);
 
-        authenticateUser(loginDto.getEmail(), loginDto.getPassword());
         return JwtAuthenticationResponseDto.builder()
                 .timestamp(new Date())
                 .username(user.getUsername())

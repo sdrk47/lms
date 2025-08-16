@@ -30,5 +30,4 @@ public class CourseController {
     public Course getCourseById(@PathVariable Long courseId){
         return courseService.findById(courseId);
     }
-
 }

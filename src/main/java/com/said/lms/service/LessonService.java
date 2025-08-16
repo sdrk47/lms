@@ -5,8 +5,10 @@ import com.said.lms.model.Course;
 import com.said.lms.model.Lesson;
 import com.said.lms.repository.LessonRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,10 +34,14 @@ public class LessonService {
     }
 
     public List<Lesson> getLessonsOfCourse(Long courseId) {
+        List<Lesson> lessonsInCourse = lessonRepository.findByCourseCourseId(courseId);
+        if(lessonsInCourse.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found");
+        }
         return lessonRepository.findByCourseCourseId(courseId);
     }
 
     public Lesson getLessonById(Long id) {
-        return lessonRepository.findById(id).orElse(null);
+        return lessonRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found"));
     }
 }

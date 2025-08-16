@@ -45,5 +45,4 @@ public class CourseService {
         return courseRepository.findById(id).orElseThrow(()->
                 new CourseNotFoundException("Course not found"));
     }
-
 }
