@@ -8,7 +8,7 @@ import com.said.lms.exception.IncorrectPasswordException;
 import com.said.lms.model.Teacher;
 import com.said.lms.model.User;
 import com.said.lms.repository.AuthenticationRepository;
-import com.said.lms.repository.JwtRepository;
+import com.said.lms.token.repository.JwtRepository;
 import com.said.lms.token.JwtParser;
 import com.said.lms.token.dto.JwtAuthenticationResponseDto;
 import io.jsonwebtoken.ExpiredJwtException;

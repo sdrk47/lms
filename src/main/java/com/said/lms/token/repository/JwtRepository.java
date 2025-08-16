@@ -1,4 +1,4 @@
-package com.said.lms.repository;
+package com.said.lms.token.repository;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
